@@ -84,6 +84,36 @@ const items = [{
     },
 ];
 
+
 const shopItems = document.querySelector("#shop-items");
-const itemsTemplate = document.querySelector("#item-template");
-const nothingFound = document.querySelector("#nothing-found");
+const itemTemplate = document.querySelector("#item-template");
+//const nothingFound = document.querySelector("#nothing-found");
+
+function createItemByTemplate(item) {
+
+    const cardProductTemplate = itemTemplate.content.cloneNode(true);
+    const tags = cardProductTemplate.querySelector(".tags");
+
+    cardProductTemplate.querySelector("h1").textContent = item.title;
+    cardProductTemplate.querySelector("p").textContent = item.description;
+    cardProductTemplate.querySelector("img").src = item.img;
+    cardProductTemplate.querySelector(".price").textContent = item.price;
+
+    item.tags.forEach((tag => {
+        const divTag = document.createElement("span");
+        divTag.classList.add("tag");
+        divTag.textContent = tag;
+        tags.append(divTag);
+    }));
+    return cardProductTemplate;
+};
+
+function madeItems(items) {
+    items.forEach((item) => {
+        const newItem = createItemByTemplate(item);
+        shopItems.append(newItem);
+    });
+
+}
+
+madeItems(items);
